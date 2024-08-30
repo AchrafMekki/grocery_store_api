@@ -20,6 +20,8 @@ from django.urls import path , include
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('api/v1/cart/',include('apps.purchase.urls',namespace = 'cart-urls')),
-    path("api/v1/product/", include("apps.product.urls", namespace='product-url')),
+    path("api/v1/cart/", include("apps.purchase.urls", namespace="cart-urls")),
+    path("api/v1/product/", include("apps.product.urls", namespace="product-url")),
+    path("api/v1/customer/", include("apps.customer.urls", namespace="customer-url")),
+    path("api/v1/auth/", include("dj_rest_auth.urls")),
 ]
