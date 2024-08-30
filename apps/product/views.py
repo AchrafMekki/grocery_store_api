@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.decorators import api_view
-
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from .serializer import CreateProductSerializer, ListProductSerializer
 from .models import Product
 
@@ -16,7 +16,9 @@ def product_list(request):
     return Response(data.data, status=status.HTTP_200_OK)
 
 # Who can create products? Only superuser?
+
 @api_view(['POST'])
+@permission_classes([IsAuthenticated, IsAdminUser])
 def create_product(request):
     data = request.data
     product = CreateProductSerializer(data=data)
