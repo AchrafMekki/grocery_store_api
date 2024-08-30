@@ -28,3 +28,6 @@ class ListProductSerializer(serializers.ModelSerializer):
         model = Product
         #  fields= '__all__'
         exclude = ('stock',)
+
+
+# json_data = '{"id":1,"name":"Banana","image":"img","price":3,"description":"this is a banana","brand":"Chiquita","stock":2}'

@@ -3,4 +3,8 @@ django-environ==0.11.2
 psycopg==3.1.14
 djangorestframework==3.15.2
 pillow==10.4.0
+<<<<<<< HEAD
 dj-rest-auth==6.0.0
+=======
+djangorestframework-simplejwt==5.3.1
+>>>>>>> 26b1c14fb969eaba0af0bca6a4c1ef80e8c52dd1

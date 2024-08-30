@@ -15,7 +15,7 @@ def product_list(request):
     data = ListProductSerializer(products, many=True)
     return Response(data.data, status=status.HTTP_200_OK)
 
-
+# Who can create products? Only superuser?
 @api_view(['POST'])
 def create_product(request):
     data = request.data

@@ -1,4 +1,5 @@
 from pathlib import Path
+from datetime import timedelta
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
@@ -21,11 +22,17 @@ CREATED_APP = [
 ]  # custom apps goe here
 
 THIRD_PARTY_APP = [
+<<<<<<< HEAD
     "rest_framework",
     "rest_framework.authtoken",
     "dj_rest_auth",
     "rest_framework_simplejwt",
 ]  # third party apps goes here
+=======
+    'rest_framework',
+    'rest_framework_simplejwt',
+    ]  # third party apps goe here
+>>>>>>> 26b1c14fb969eaba0af0bca6a4c1ef80e8c52dd1
 
 INSTALLED_APPS = [*DEFAULT_APP, *CREATED_APP, *THIRD_PARTY_APP]
 
@@ -96,9 +103,26 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+<<<<<<< HEAD
 # REST_FRAMEWORK = {
 #     "DEFAULT_AUTHENTICATION_CLASSES": (
 #         "rest_framework.authentication.TokenAuthentication",
 #     ),
 #     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
 # }
+=======
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME':timedelta(days=15),
+    'REFRESH_TOKEN_LIFETIME':timedelta(days=1),
+    'BLACKLIST_AFTER_ROTATION':True,
+    'AUTH_HEADER_TYPES':('Bearer',),
+    'AUTH_TOKEN_CLASSES':("rest_framework_simplejwt.tokens.AccessToken", ),
+}
+>>>>>>> 26b1c14fb969eaba0af0bca6a4c1ef80e8c52dd1
