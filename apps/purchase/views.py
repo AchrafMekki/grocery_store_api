@@ -1,4 +1,4 @@
-#from django.shortcuts import render
+# from django.shortcuts import render
 
 # Create your views here.
 from rest_framework.decorators import api_view, permission_classes
@@ -10,7 +10,7 @@ from apps.purchase.models import Cart, OrderTest, ItemTest
 from apps.purchase.serializer import CartSerializer, OrderItemSerializer, OrderSerializer
 from apps.product.models import Product
 
-#Function-base view
+# Function-base view
 @api_view(['GET']) # by default , it uses a 'GET' method
 def view_cart(request):
     # Get all items using ORM
@@ -86,7 +86,7 @@ def new_order(request):
         
         serializer = OrderSerializer(order, many=False)
         return Response(serializer.data)
-    
+
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated, IsAdminUser])
 def process_order(request, pk):
@@ -105,3 +105,22 @@ def delete_order(request, pk):
 
     order.delete()
     return Response({'order': 'Order is deleted.'})
+
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def add_to_cart(request, pk):
+
+    product = Product.objects.get(pk=pk)  # get the product (pk)
+
+    cart, _ = Cart.objects.get_or_create(customer_id=request.user.customer_id)
+
+    cart_item, created = Cart.objects.get_or_create(customer_id=request.user.customer_id, product_id=product)
+
+    if created:
+        cart_item.quantity = 1
+    else:
+        cart_item.quantity += 1
+    cart_item.save()
+    
+    return Response({"status": "Product added to cart"}, status=status.HTTP_200_OK)

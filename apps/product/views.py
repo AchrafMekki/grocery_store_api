@@ -18,7 +18,7 @@ def product_list(request):
 # Who can create products? Only superuser?
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated, IsAdminUser])
+@permission_classes([IsAdminUser])
 def create_product(request):
     data = request.data
     product = CreateProductSerializer(data=data)

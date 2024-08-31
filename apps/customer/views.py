@@ -1,10 +1,11 @@
-
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
+
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 from rest_framework import status
-from .serializer import SignUpSerializer
+from .serializer import SignUpSerializer, UserSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 # Create your views here.
@@ -31,6 +32,7 @@ curl -H "Content-Type: application/json" http://localhost:8000/api/v1/customer/t
 curl -d '{"username": "admin", "password": "admin"}' http://localhost:8000/api/v1/customer/token/
 """
 @api_view(["POST"])
+@permission_classes([IsAuthenticated])
 def register(request):
     data = request.data
 
@@ -54,3 +56,33 @@ def register(request):
 
     else:
         return Response(user.errors)
+
+@api_view(["GET"])
+@permission_classes([IsAdminUser])
+def get_list_customer(request):
+    customers = User.objects.all()
+    data = UserSerializer(customers, many=True) 
+    return Response(data.data, status=status.HTTP_200_OK)
+
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_current_user(request):
+    user = request.user   # to get the current user
+    data = UserSerializer(user)
+    return Response(data.data)
+
+
+
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def update_user_details(request, pk):
+    user = User.objects.get(pk=pk)
+    data = UserSerializer(user, data=request.data)
+    if data.is_valid():
+        data.save()
+        return Response(data.data, status=status.HTTP_200_OK)
+    else:
+        return Response(data.errors, status=status.HTTP_400_BAD_REQUEST)

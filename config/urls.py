@@ -20,10 +20,10 @@ from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/v1/cart/", include("apps.purchase.urls", namespace="cart-urls")),
-    path("api/v1/product/", include("apps.product.urls", namespace="product-url")),
-    path("api/v1/customer/", include("apps.customer.urls", namespace="customer-url")),
+    path("api/v1/cart/", include("apps.purchase.urls", namespace="purchase-urls")),
+    path("api/v1/product/", include("apps.product.urls", namespace="product-urls")),
+    path("api/v1/customer/", include("apps.customer.urls", namespace="customer-urls")),
     path("api/v1/auth/", include("dj_rest_auth.urls")),
-    path('api/v1/cart/',include('apps.purchase.urls',namespace='cart-urls')),
     path("api/v1/token/", TokenObtainPairView.as_view()),
+
 ]

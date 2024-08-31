@@ -1,10 +1,10 @@
 from django.urls import path
 from . import views
 
-app_name = 'product-url'
+app_name = 'customer-urls'
 urlpatterns = [
     path("register/", views.register, name="register-customer"),
-    path("me/", views.current_user, name="current_user"),
-    path("me/update/", views.update_user, name="current_user"),
-
+    path("list/", views.get_list_customer, name="list-customer"),
+    path("details/", views.get_current_user, name="current_user"),
+    path("update/<int:pk>/", views.update_user_details, name="update_user"),
 ]
